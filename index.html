@@ -18,7 +18,7 @@
 .report{display:none;padding:10px 0 70px}.report.show{display:block}.back{border:0;background:none;padding:8px 0;font-weight:900}.title{font-size:clamp(30px,6vw,46px);font-weight:900;letter-spacing:-2px;line-height:1.05;margin:12px 0 7px}.source{margin-top:14px;background:var(--soft);color:var(--green);border-radius:12px;padding:11px;font-size:11px;line-height:1.5}
 .card{margin-top:17px;background:white;border:1px solid var(--line);border-radius:14px;padding:15px}.card h3{margin:0 0 10px;font-size:16px}.row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid #eef0f2;font-size:12px}.row:last-child{border:0}.row span{color:var(--muted)}.row b{text-align:right}
 .verifyHead{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-top:26px}.verifyHead h2{margin:0;font-size:22px}.verifyHead span{font-size:11px;color:var(--muted)}
-.facility{background:white;border:1px solid var(--line);border-radius:13px;padding:12px;margin-top:8px}.facilityTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.facilityName{font-size:14px;font-weight:900}.official{font-size:10px;font-weight:900;color:var(--muted);background:#f1f2f4;border-radius:8px;padding:7px 8px}.official.yes{background:var(--soft);color:var(--green)}.official.no{background:var(--softred);color:var(--red)}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.choice{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 6px;font-size:11px;font-weight:900}.choice.active.yes{background:var(--soft);color:var(--green);border-color:#b8dec9}.choice.active.no{background:var(--softred);color:var(--red);border-color:#f0bdb6}.choice.active.unsure{background:#f1f2f4;color:#666b74}
+.facility{background:white;border:1px solid var(--line);border-radius:13px;padding:12px;margin-top:8px}.facilityTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.facilityName{font-size:14px;font-weight:900}.official{font-size:10px;font-weight:900;color:var(--muted);background:#f1f2f4;border-radius:8px;padding:7px 8px}.official.yes{background:var(--soft);color:var(--green)}.official.no{background:var(--softred);color:var(--red)}.official.value{background:#fff4c7;color:#5f5318}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.choice{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 6px;font-size:11px;font-weight:900}.choice.active.yes{background:var(--soft);color:var(--green);border-color:#b8dec9}.choice.active.no{background:var(--softred);color:var(--red);border-color:#f0bdb6}.choice.active.unsure{background:#f1f2f4;color:#666b74}
 .saved{margin-top:12px;font-size:11px;color:var(--green);min-height:16px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px;font-weight:900}.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
 .banner{margin-top:16px;background:var(--ink);color:white;border-radius:14px;padding:14px;font-size:12px;line-height:1.5}.banner b{color:var(--yellow)}
 .share{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;align-items:flex-end;justify-content:center}.share.show{display:flex}.sheet{width:min(520px,100%);background:white;border-radius:20px 20px 0 0;padding:16px}.story{aspect-ratio:9/16;background:var(--yellow);border:2px solid var(--ink);border-radius:16px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}.story h2{font-size:34px;line-height:1;letter-spacing:-1.5px;margin:8px 0}.storySchool{font-size:15px;font-weight:900}.storyStats{background:white;border:2px solid var(--ink);border-radius:14px;padding:12px}.storyStats div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:12px}.storyStats div:last-child{border:0}.sheetActions{display:flex;gap:8px;margin-top:10px}.sheetActions button{flex:1}
@@ -49,7 +49,7 @@
 <button class="back" onclick="goBack()">← Search another school</button>
 <div id="schoolTitle" class="title"></div>
 <div id="schoolMeta" class="meta"></div>
-<div id="officialSource" class="source">School identity comes from the public UDISE-derived directory. Loading the official facility record…</div>
+<div id="officialSource" class="source">School identity comes from the public UDISE-derived directory. Loading official UDISE+ record where available…</div>
 
 <div class="card"><h3>School details</h3><div id="details"></div></div>
 
@@ -58,7 +58,7 @@
 <div id="saved" class="saved"></div>
 
 <div class="actions"><button class="btn primary" onclick="openShare()">Share ground report</button><button class="btn" onclick="resetReport()">Reset check</button></div>
-<div class="banner"><b>Next layer:</b> the official UDISE+ infrastructure values will sit beside these ground checks. We are keeping the two records separate so neither can overwrite the other.</div>
+<div class="banner"><b>About the data:</b> connected school records are labelled with their UDISE+ academic year. Ground observations are saved separately and never overwrite the government record.</div>
 </section>
 </div>
 
@@ -100,24 +100,70 @@ function render(arr){if(!arr.length){$("results").innerHTML='<div class="msg"><b
 function reportKey(){return "stk-ground-"+currentSchool.code}
 function getReport(){try{return JSON.parse(localStorage.getItem(reportKey())||"{}")}catch(e){return{}}}
 function saveReport(r){localStorage.setItem(reportKey(),JSON.stringify({...r,updatedAt:new Date().toISOString()}));$("saved").textContent="Saved on this phone · "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}
-let officialFacilityData=null;
+let officialRecord=null;
 
+/*
+ Connected school-level UDISE+ 2024–25 datasets.
+ One loader discovers the dataset resources (Profile, Facilities,
+ Enrolment and Teachers) through CKAN instead of hard-coding every CSV ID.
+*/
+const UDISE_DATASETS=[
+ {test:d=>/^PUNE$/i.test(d), slug:"pune-udise-2024-25", label:"Pune", scope:null},
+ {test:d=>/MUMBAI.*SUBURB/i.test(d), slug:"mumbai-udise-2024-25", label:"Mumbai Suburban", scope:/suburban/i},
+ {test:d=>/^MUMBAI$|MUMBAI CITY/i.test(d), slug:"mumbai-udise-2024-25", label:"Mumbai City", scope:/city/i},
+ {test:d=>/DELHI/i.test(d), slug:"delhi-udise-2024-25", label:"Delhi", scope:null},
+ {test:d=>/BENGALURU.*NORTH|BANGALORE.*NORTH/i.test(d), slug:"bengaluru-urban-udise-2024-25", label:"Bengaluru Urban North", scope:/north/i},
+ {test:d=>/BENGALURU.*SOUTH|BANGALORE.*SOUTH/i.test(d), slug:"bengaluru-urban-udise-2024-25", label:"Bengaluru Urban South", scope:/south/i},
+ {test:d=>/HYDERABAD/i.test(d), slug:"hyderabad-udise-2024-25", label:"Hyderabad", scope:null},
+ {test:d=>/CHENNAI/i.test(d), slug:"chennai-udise-2024-25", label:"Chennai", scope:null},
+ {test:d=>/KOLKATA/i.test(d), slug:"kolkata-udise-2024-25", label:"Kolkata", scope:null}
+];
+
+function cfgFor(s){
+ const d=String(s.district||"");
+ return UDISE_DATASETS.find(x=>x.test(d))||null;
+}
+function keyNorm(s){return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
+function valBy(rec, patterns){
+ const keys=Object.keys(rec||{});
+ for(const pattern of patterns){
+   const k=keys.find(x=>pattern.test(keyNorm(x)));
+   if(k!==undefined && rec[k]!==null && rec[k]!==undefined && String(rec[k]).trim()!=="") return rec[k];
+ }
+ return null;
+}
+function num(v){
+ if(v===null||v===undefined||v==="")return null;
+ const n=Number(String(v).replace(/,/g,"").trim());
+ return Number.isFinite(n)?n:null;
+}
+function yesNo(v){
+ if(v===null||v===undefined||v==="")return null;
+ if(typeof v==="boolean")return v;
+ if(typeof v==="number")return v>0;
+ const x=String(v).trim().toLowerCase();
+ if(["yes","y","true","available","functional","1"].includes(x))return true;
+ if(["no","n","false","not available","not functional","0"].includes(x))return false;
+ const n=num(v); return n===null?null:n>0;
+}
+function countOrYN(v){
+ const n=num(v);
+ return n===null?yesNo(v):n;
+}
 function displayOfficial(v){
  if(v===true)return ["YES","yes"];
  if(v===false)return ["NO","no"];
  if(v===null||v===undefined||v==="")return ["NOT RECORDED",""];
- return [String(v),""];
+ return [String(v),"value"];
 }
 function renderFacilities(){
- const r=getReport();
+ const r=getReport(), vals=officialRecord?.facilities||[];
  $("facilities").innerHTML=FAC.map((name,i)=>{
-   const ground=r[i]||"";
-   const off=officialFacilityData?.values?.[i];
-   const [offText,offClass]=displayOfficial(off);
+   const ground=r[i]||"", [txt,cls]=displayOfficial(vals[i]);
    return `<div class="facility">
      <div class="facilityTop">
        <div class="facilityName">${name}</div>
-       <div class="official ${offClass}">RECORD: ${esc(offText)}</div>
+       <div class="official ${cls}">RECORD: ${esc(txt)}</div>
      </div>
      <div class="choices">
        <button class="choice yes ${ground==="yes"?"active":""}" data-i="${i}" data-v="yes">YES</button>
@@ -130,91 +176,123 @@ function renderFacilities(){
  if(r.updatedAt)$("saved").textContent="Saved on this phone";
 }
 
-function nk(s){return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ")}
-function findField(rec, patterns){
- const keys=Object.keys(rec||{});
- for(const p of patterns){
-   const hit=keys.find(k=>p.test(nk(k)));
-   if(hit!==undefined && rec[hit]!==undefined && rec[hit]!==null && String(rec[hit]).trim()!=="") return rec[hit];
+async function packageInfo(slug){
+ const r=await fetch("/opencity-package?id="+encodeURIComponent(slug),{cache:"force-cache"});
+ if(!r.ok)throw new Error("dataset catalogue unavailable");
+ const d=await r.json();
+ if(!d?.success||!d?.result)throw new Error("dataset not found");
+ return d.result;
+}
+function usefulResources(pkg,cfg){
+ const all=(pkg.resources||[]).filter(r=>r.datastore_active!==false);
+ const kinds=/profile|facilit|enrol|teacher/i;
+ return all.filter(r=>{
+   const name=String(r.name||"");
+   if(!kinds.test(name))return false;
+   if(!cfg.scope)return true;
+   // For datasets split into named sub-district resources (Mumbai/Bengaluru),
+   // apply scope only when resource names contain those district qualifiers.
+   const hasQualifier=/city|suburban|north|south/i.test(name);
+   return !hasQualifier || cfg.scope.test(name);
+ });
+}
+async function querySchool(resourceId,code){
+ const url="/opencity-data?resource_id="+encodeURIComponent(resourceId)+"&q="+encodeURIComponent(code)+"&limit=20";
+ const r=await fetch(url,{cache:"force-cache"});
+ if(!r.ok)return null;
+ const d=await r.json(), records=d?.result?.records||[];
+ return records.find(rec=>Object.values(rec).some(v=>String(v).trim()===String(code)))||null;
+}
+function mergeRecords(records){
+ const out={};
+ for(const r of records.filter(Boolean))for(const [k,v] of Object.entries(r)){
+   if(v!==null&&v!==undefined&&String(v).trim()!=="")out[k]=v;
  }
- return null;
+ return out;
 }
-function toBool(v){
- if(v===null||v===undefined||v==="")return null;
- if(typeof v==="boolean")return v;
- if(typeof v==="number")return v>0;
- const x=String(v).trim().toLowerCase();
- if(["yes","y","true","available","functional","1"].includes(x))return true;
- if(["no","n","false","not available","not functional","0"].includes(x))return false;
- const n=Number(x);
- if(!Number.isNaN(n))return n>0;
- return null;
+function sumFields(rec, regex){
+ let total=0,found=false;
+ for(const [k,v] of Object.entries(rec||{})){
+   if(regex.test(keyNorm(k))){
+     const n=num(v); if(n!==null){total+=n;found=true}
+   }
+ }
+ return found?total:null;
 }
-function toCountOrBool(v){
- if(v===null||v===undefined||v==="")return null;
- const n=Number(String(v).replace(/,/g,"").trim());
- if(!Number.isNaN(n)) return n;
- return toBool(v);
-}
+function deriveRecord(rec){
+ // Prefer explicitly functional infrastructure fields wherever available.
+ const electricity=yesNo(valBy(rec,[/functional.*electric/,/electric.*functional/,/^electricity availability$/, /^electricity$/]));
+ const water=yesNo(valBy(rec,[/functional.*drinking.*water/,/drinking.*water.*functional/,/^tap fun yn$/, /^hand pump fun yn$/, /^well prot fun yn$/, /drinking.*water/]));
+ const girls=countOrYN(valBy(rec,[/^total girls func toilet$/, /functional.*girls.*toilet/,/girls.*toilet.*functional/,/girls.*toilet/]));
+ const boys=countOrYN(valBy(rec,[/^total boys func toilet$/, /functional.*boys.*toilet/,/boys.*toilet.*functional/,/boys.*toilet/]));
+ const library=yesNo(valBy(rec,[/^library availability$/, /library.*available/, /^library$/]));
+ const playground=yesNo(valBy(rec,[/^playground available$/, /play.*ground/]));
+ const internet=yesNo(valBy(rec,[/^internet$/, /internet.*available/]));
+ let computers=countOrYN(valBy(rec,[/functional.*computer/,/computer.*functional/,/computer.*available/]));
+ if(computers===null){
+   const c=sumFields(rec,/^(desktop|laptop|tablet)$/); if(c!==null)computers=c;
+ }
+ const ramp=yesNo(valBy(rec,[/^availability ramps$/, /ramp.*cwsn/,/cwsn.*ramp/,/^ramp/]));
 
-async function loadOfficialFacilities(s){
- officialFacilityData=null;
- renderFacilities();
- const source=$("officialSource");
- if(String(s.district||"").toUpperCase()!=="PUNE"){
-   source.textContent="School identity: public UDISE-derived directory. Detailed facility record for this district is not connected yet.";
+ // School summary values from profile/enrolment/teacher resources, using explicit totals first.
+ let students=num(valBy(rec,[/^total.*enrol/,/^total.*student/,/^enrolment total$/, /^total enrolment$/]));
+ if(students===null){
+   // fallback: sum class total fields, avoiding percentage/rate fields.
+   students=sumFields(rec,/^(class|grade).*(total|enrol)/);
+ }
+ let teachers=num(valBy(rec,[/^total.*teacher/,/^teacher.*total/,/^tot teacher/]));
+ let classrooms=num(valBy(rec,[/^total.*classroom/,/^classroom.*total/,/^classrooms instructional/,/^instructional classroom/]));
+
+ return {facilities:[electricity,water,girls,boys,library,playground,internet,computers,ramp],students,teachers,classrooms};
+}
+function renderOfficialStats(){
+ let box=document.getElementById("officialStats");
+ if(!box){
+   const card=document.querySelector("#report .card");
+   box=document.createElement("div"); box.id="officialStats"; box.className="card";
+   card.insertAdjacentElement("afterend",box);
+ }
+ const vals=[
+  ["Students",officialRecord?.students],
+  ["Teachers",officialRecord?.teachers],
+  ["Classrooms",officialRecord?.classrooms]
+ ].filter(x=>x[1]!==null&&x[1]!==undefined);
+ if(!vals.length){box.style.display="none";return}
+ box.style.display="block";
+ box.innerHTML="<h3>Official school summary</h3>"+vals.map(([a,b])=>`<div class="row"><span>${a}</span><b>${esc(b)}</b></div>`).join("");
+}
+async function loadOfficialRecord(s){
+ officialRecord=null; renderFacilities(); renderOfficialStats();
+ const source=$("officialSource"),cfg=cfgFor(s);
+ if(!cfg){
+   source.innerHTML="<b>Official record:</b> detailed school-level UDISE+ 2024–25 data is not connected for this district yet. Ground checking still works.";
    return;
  }
- source.textContent="Loading UDISE+ 2024–25 facility record…";
+ source.textContent="Loading UDISE+ 2024–25 official record…";
  try{
-   const url="/pune-facilities?resource_id=11d7fca6-cd1c-49a1-be68-b39429dc15cf&q="+encodeURIComponent(s.code)+"&limit=10";
-   const resp=await fetch(url,{cache:"force-cache"});
-   if(!resp.ok)throw new Error("facility source returned "+resp.status);
-   const raw=await resp.json();
-   const records=raw?.result?.records||raw?.records||[];
-   const rec=records.find(r=>Object.values(r).some(v=>String(v).trim()===String(s.code))) || records[0];
-   if(!rec){
-     source.textContent="UDISE+ 2024–25 Pune facility dataset: no matching record found for this UDISE code.";
+   const pkg=await packageInfo(cfg.slug), resources=usefulResources(pkg,cfg);
+   const rows=[];
+   for(const r of resources){
+     const rec=await querySchool(r.id,s.code);
+     if(rec)rows.push(rec);
+   }
+   if(!rows.length){
+     source.innerHTML="<b>UDISE+ 2024–25:</b> no matching school-level record was found in the connected "+esc(cfg.label)+" dataset.";
      return;
    }
-
-   // Match common UDISE column-name variants. Prefer functional values where both exist.
-   const electricity=toBool(findField(rec,[
-     /functional.*electric/,/electric.*functional/,/^electricity$/, /electricity.*available/
-   ]));
-   const water=toBool(findField(rec,[
-     /functional.*drinking.*water/,/drinking.*water.*functional/,/drinking.*water/
-   ]));
-   const girls=toCountOrBool(findField(rec,[
-     /functional.*girls.*toilet/,/girls.*toilet.*functional/,/girls.*toilet/
-   ]));
-   const boys=toCountOrBool(findField(rec,[
-     /functional.*boys.*toilet/,/boys.*toilet.*functional/,/boys.*toilet/
-   ]));
-   const library=toBool(findField(rec,[/library.*available/,/^library$/, /library/]));
-   const playground=toBool(findField(rec,[/play.*ground/,/playground/]));
-   const internet=toBool(findField(rec,[/internet.*available/,/^internet$/, /internet/]));
-   const computers=toCountOrBool(findField(rec,[
-     /functional.*computer/,/computer.*functional/,/computer.*available/,/computer/
-   ]));
-   const ramp=toBool(findField(rec,[/ramp.*cwsn/,/cwsn.*ramp/,/^ramp/,/ramp/]));
-
-   officialFacilityData={
-     year:"2024–25",
-     values:[electricity,water,girls,boys,library,playground,internet,computers,ramp],
-     raw:rec
-   };
-   source.innerHTML="<b>Official record:</b> UDISE+ 2024–25 · Pune Facilities dataset. Ground observations are kept separately.";
-   renderFacilities();
+   const merged=mergeRecords(rows),derived=deriveRecord(merged);
+   officialRecord={year:"2024–25",label:cfg.label,raw:merged,...derived};
+   source.innerHTML="<b>Official record:</b> UDISE+ 2024–25 · "+esc(cfg.label)+". Ground observations are stored separately.";
+   renderFacilities();renderOfficialStats();
  }catch(e){
-   source.textContent="Could not load the UDISE+ 2024–25 Pune facility record right now. School identity is still available.";
+   source.innerHTML="<b>Official record:</b> could not be loaded right now. School identity and ground checking are still available.";
  }
 }
 
 function setChoice(i,v){const r=getReport();r[i]=r[i]===v?"":v;saveReport(r);renderFacilities()}
 function resetReport(){if(!currentSchool)return;localStorage.removeItem(reportKey());$("saved").textContent="";renderFacilities()}
 
-function openSchool(s){currentSchool=s;$("home").style.display="none";$("report").classList.add("show");$("schoolTitle").textContent=s.name;$("schoolMeta").textContent=[s.village,s.district,s.state].filter(Boolean).join(" · ");const rows=[["UDISE code",s.code],["Management",s.management],["Category",s.category],["School type",s.type],["Village / area",s.village],["District",s.district],["State",s.state],["PIN code",s.pincode],["Location",s.ruralUrban==="1"?"Rural":s.ruralUrban==="2"?"Urban":""]];$("details").innerHTML=rows.filter(x=>x[1]).map(([a,b])=>`<div class="row"><span>${esc(a)}</span><b>${esc(b)}</b></div>`).join("");renderFacilities();loadOfficialFacilities(s);window.scrollTo({top:0,behavior:"smooth"})}
+function openSchool(s){currentSchool=s;$("home").style.display="none";$("report").classList.add("show");$("schoolTitle").textContent=s.name;$("schoolMeta").textContent=[s.village,s.district,s.state].filter(Boolean).join(" · ");const rows=[["UDISE code",s.code],["Management",s.management],["Category",s.category],["School type",s.type],["Village / area",s.village],["District",s.district],["State",s.state],["PIN code",s.pincode],["Location",s.ruralUrban==="1"?"Rural":s.ruralUrban==="2"?"Urban":""]];$("details").innerHTML=rows.filter(x=>x[1]).map(([a,b])=>`<div class="row"><span>${esc(a)}</span><b>${esc(b)}</b></div>`).join("");renderFacilities();loadOfficialRecord(s);window.scrollTo({top:0,behavior:"smooth"})}
 function goBack(){$("report").classList.remove("show");$("home").style.display="block";window.scrollTo({top:0,behavior:"smooth"})}
 
 function openShare(){if(!currentSchool)return;const r=getReport(),vals=Object.values(r).filter(v=>["yes","no","unsure"].includes(v));$("storySchool").textContent=currentSchool.name;$("storyPlace").textContent=[currentSchool.village,currentSchool.district,currentSchool.state].filter(Boolean).join(" · ");$("storyChecked").textContent=vals.length;$("storyYes").textContent=vals.filter(v=>v==="yes").length;$("storyNo").textContent=vals.filter(v=>v==="no").length;$("share").classList.add("show")}
