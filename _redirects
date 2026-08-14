@@ -1,0 +1,4 @@
+/district-map  https://raw.githubusercontent.com/gsidhu/NAS-2021-data/refs/heads/main/csv_data/NAS_district_udise_codes.csv  200
+/udise-raw/*  https://raw.githubusercontent.com/datameet/udise_schools/refs/heads/master/raw/:splat  200
+
+/pune-facilities  https://data.opencity.in/api/3/action/datastore_search  200
