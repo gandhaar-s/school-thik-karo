@@ -29,3 +29,193 @@ header{background:rgba(255,255,255,.97)!important;border-bottom:1px solid var(--
 .unavailable{padding:21px;border-radius:17px;background:#FFF8F3;border:1px solid #FFD7C2;margin-bottom:22px}.unavailable>strong{font-size:22px;color:var(--saffron)}.unavailable p{font-size:15px;line-height:1.55;color:#344054}.unavailable a{font-weight:850;color:var(--blue);text-decoration:underline}.unavailable em{color:#667085}
 .independent-note{margin:30px 0 16px;padding:14px 16px;border-radius:12px;background:#F8FAFC;border:1px solid var(--line);font-size:12px;font-weight:850;letter-spacing:.055em;color:var(--blue)}.independent-note b{color:var(--green)}.actions button{font-size:16px!important;padding:15px 18px!important}.secondary{background:#F2F4F7!important;color:var(--ink)!important}.info .row strong{font-size:16px!important}
 @media(max-width:640px){.site-status{font-size:9px;gap:5px;padding:10px 8px}.detail{padding:28px 22px!important}.detail h2{font-size:44px!important}.hero p{font-size:18px!important}.amen-grid{grid-template-columns:1fr!important}.amen strong{font-size:20px!important}.gov-title{font-size:16px}.gov-aside{font-size:14px}}
+
+/* ===== Playful India refresh ===== */
+:root{
+  --india-saffron:#FF9933;
+  --india-green:#138808;
+  --india-blue:#000080;
+  --india-ink:#161616;
+  --india-soft:#F7F8FA;
+  --india-line:#E7E7E7;
+  --india-muted:#6B7280;
+}
+html,body{background:#fff!important;color:var(--india-ink)!important}
+
+body:before{
+  height:6px!important;
+  background:linear-gradient(90deg,var(--india-saffron) 0 33.333%,#fff 33.333% 66.666%,var(--india-green) 66.666%)!important;
+}
+
+.site-status{
+  background:#fff!important;
+  color:var(--india-blue)!important;
+  border-bottom:1px solid var(--india-line)!important;
+  font-weight:900!important;
+}
+.site-status span{color:var(--india-green)!important}
+
+header{
+  background:rgba(255,255,255,.98)!important;
+  box-shadow:none!important;
+}
+.brand{
+  color:var(--india-ink)!important;
+  font-size:25px!important;
+  letter-spacing:-.045em!important;
+}
+.brand span,.brand b{color:var(--india-saffron)!important}
+
+.hero h1,h1,.detail h2{
+  color:var(--india-ink)!important;
+}
+.hero p,.sub{color:#61656D!important}
+
+.eyebrow,.code,.sect,.gov-title{
+  color:var(--india-saffron)!important;
+}
+
+.search{
+  border:2px solid var(--india-ink)!important;
+  box-shadow:0 7px 0 var(--india-green)!important;
+}
+.search button,.primary{
+  background:var(--india-green)!important;
+  color:#fff!important;
+}
+.secondary{
+  background:#FFF4E8!important;
+  color:var(--india-ink)!important;
+}
+
+.detail{
+  background:#fff!important;
+}
+.detail h2{
+  font-size:clamp(44px,6vw,72px)!important;
+  letter-spacing:-.072em!important;
+  line-height:.92!important;
+}
+.tiny-wink{
+  display:inline-block;
+  margin-top:10px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:#FFF4E8;
+  color:#8A4A12;
+  font-size:12px;
+  font-weight:800;
+}
+
+.playful-sect{
+  font-size:14px!important;
+}
+.playful-sect:after{
+  content:"  👀";
+  letter-spacing:0;
+}
+
+.kpis{
+  gap:14px!important;
+}
+.kpi{
+  border:1px solid var(--india-line)!important;
+  border-radius:22px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+.kpi:nth-child(1),
+.kpi:nth-child(3){
+  background:#FFF6EC!important;
+}
+.kpi:nth-child(2){
+  background:#F1FAF1!important;
+}
+.kpi:nth-child(4){
+  background:#F3F4FF!important;
+}
+.kpi:nth-child(5),
+.kpi:nth-child(6){
+  background:#FAFAFA!important;
+}
+.kpi strong{
+  color:var(--india-ink)!important;
+  font-size:37px!important;
+}
+.kpi:nth-child(1) strong{color:#C95B00!important}
+.kpi:nth-child(2) strong{color:var(--india-green)!important}
+.kpi:nth-child(4) strong{color:var(--india-blue)!important}
+.kpi span{
+  color:#6B7280!important;
+  font-size:12px!important;
+  font-weight:850!important;
+}
+
+.gov-head{
+  border:1px solid var(--india-line)!important;
+  border-left:8px solid var(--india-saffron)!important;
+  background:#fff!important;
+  border-radius:20px!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.035)!important;
+}
+.gov-title{
+  font-size:19px!important;
+  letter-spacing:.07em!important;
+}
+.gov-year{
+  color:var(--india-green)!important;
+}
+.gov-aside{
+  color:#555!important;
+  font-size:16px!important;
+  line-height:1.45!important;
+}
+
+.amen{
+  border:1px solid var(--india-line)!important;
+  border-radius:20px!important;
+  box-shadow:none!important;
+}
+.amen strong{
+  color:var(--india-ink)!important;
+}
+.amen-source{
+  color:#777!important;
+}
+.unavailable{
+  border:1px solid #FFD5B0!important;
+  background:#FFF8F1!important;
+  border-radius:20px!important;
+}
+.unavailable>strong{
+  color:#C95B00!important;
+}
+.unavailable a{
+  color:var(--india-blue)!important;
+}
+
+.independent-note{
+  background:#F5FAF5!important;
+  border:1px solid #D9EED9!important;
+  color:var(--india-ink)!important;
+  border-radius:16px!important;
+}
+.independent-note b{color:var(--india-green)!important}
+
+.card{
+  border-radius:22px!important;
+  box-shadow:none!important;
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(0,0,0,.06)!important;
+}
+.tag{
+  border-radius:999px!important;
+}
+
+@media(max-width:640px){
+  .detail h2{font-size:46px!important}
+  .kpi strong{font-size:36px!important}
+  .tiny-wink{font-size:11px}
+}
