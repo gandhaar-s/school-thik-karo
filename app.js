@@ -115,7 +115,7 @@ async function story(r,share){
  } else {
    box(p,y,W-p*2,350,cream,'#FFD7B5',30);
    c.fillStyle=saff;c.font='950 28px system-ui';c.fillText('AMENITIES',p+30,y+52);
-   c.fillStyle=ink;c.font='950 70px system-ui';c.fillText('UNAVAILABLE.',p+30,y+128);
+   c.fillStyle=ink;c.font='950 61px system-ui';c.fillText('DATA UNAVAILABLE.',p+30,y+128);
    c.font='750 25px system-ui';
    wrap(c,"The government's public 2025–26 dataset doesn't let us reliably connect this school to its amenities record.",p+30,y+184,W-p*2-60,35,3);
    c.fillStyle=green;c.font='950 32px system-ui';c.fillText("So we won't guess.",p+30,y+310);
@@ -149,8 +149,11 @@ async function story(r,share){
  c.fillStyle='#D0D5DD';c.font='700 17px system-ui';c.fillText('Official amenities source: UDISE+ · 2025–26',p+28,y+132);
  c.fillStyle='#8ED59A';c.font='900 18px system-ui';c.fillText('SCHOOL RECORDS INDIA',p+28,y+165);
 
- // Small footer rule to visually finish the poster even on very tall canvases.
- c.fillStyle=saff;c.fillRect(p,H-56,180,8);c.fillStyle=green;c.fillRect(p+180,H-56,180,8);c.fillStyle=blue;c.fillRect(p+360,H-56,60,8);
+ // Tricolour finishing rule follows the footer, never crosses disclaimer text.
+ const ruleY=Math.min(y+218,H-44);
+ c.fillStyle=saff;c.fillRect(p,ruleY,180,8);
+ c.fillStyle=green;c.fillRect(p+180,ruleY,180,8);
+ c.fillStyle=blue;c.fillRect(p+360,ruleY,60,8);
 
  const blob=await new Promise(z=>cv.toBlob(z,'image/png')),file=new File([blob],`school-${r[F.u]}-story.png`,{type:'image/png'});
  if(share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:r[F.n]});return}catch(e){}}
