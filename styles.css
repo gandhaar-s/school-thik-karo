@@ -228,3 +228,6 @@ html,body,button,input,select,textarea{
 .unavailable>strong,.independent-note,.card h2{
   font-family:'Manrope',system-ui,sans-serif!important;
 }
+
+.live-source-pill{display:inline-flex;align-items:center;gap:7px;border-radius:999px;background:#F0FAF2;color:#0B7A19;font-weight:800;font-size:12px;padding:7px 11px}
+.live-source-pill:before{content:"";width:7px;height:7px;border-radius:50%;background:#138808}
