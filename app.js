@@ -35,7 +35,7 @@ function elec(v){return v===1?'Yes':v===2?'No':v===3?'Available, not functional'
 function num(v){return v===null||v===undefined||v===''?'—':String(v)}
 function amenityPanel(a){
  if(!a)return `<div class="gov-head"><div class="gov-title">WHAT THE GOVERNMENT SAYS</div><div class="gov-year">UDISE+ · 2025–26</div><div class="gov-aside">According to UDISE+ 2025–26. Better to go and check yourself.</div></div>
-<div class="unavailable"><strong>Amenities unavailable</strong><p>The government's public 2025–26 dataset does not allow us to reliably connect this school's identity to its amenities record. <b>We won't guess.</b></p><p>You can also look up this school on the <a href="https://kys.udiseplus.gov.in/" target="_blank" rel="noopener">official UDISE+ Know Your School website</a>. <em>(It's the official government website, so obviously it's not this cool.)</em></p></div>`;
+<div class="unavailable"><strong>Amenities data unavailable</strong><p>The government's public 2025–26 dataset does not allow us to reliably connect this school's identity to its amenities record. <b>We won't guess.</b></p><p>You can also look up this school on the <a href="https://kys.udiseplus.gov.in/" target="_blank" rel="noopener">official UDISE+ Know Your School website</a>. <em>(It's the official government website, so obviously it's not this cool.)</em></p></div>`;
  const x=k=>a[AI[k]], tile=(label,val,kind='')=>`<div class="amen ${kind}"><small>${label}</small><strong>${esc(val)}</strong></div>`;
  const water=(x('tap_fun_yn')===1||x('hand_pump_fun_yn')===1||x('well_prot_fun_yn')===1||x('pack_water_fun_yn')===1||x('othsrc_fun_yn')===1)?'Yes':
    (x('tap_yn')===1||x('hand_pump_yn')===1||x('well_prot_yn')===1||x('pack_water_yn')===1||x('othsrc_yn')===1)?'Source reported':'—';
