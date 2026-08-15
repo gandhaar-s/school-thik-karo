@@ -9,3 +9,23 @@
 .amen-missing{padding:14px;border:1px dashed #cbd5e1;border-radius:14px;color:#64748b;background:#f8fafc;margin:10px 0 18px}
 .amen-source{font-size:11px;color:#64748b;margin:10px 0 18px;line-height:1.4}
 @media(max-width:520px){.amen-grid{grid-template-columns:1fr 1fr}.amen{padding:10px}}
+
+/* ===== Independent Indian civic-data visual system ===== */
+:root{--saffron:#FF671F;--green:#138808;--blue:#000080;--ink:#18212B;--muted:#667085;--line:#E4E7EC}
+html,body{background:#fff!important;color:var(--ink)!important}
+body:before{content:"";position:fixed;z-index:9999;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--saffron) 0 33.333%,#fff 33.333% 66.666%,var(--green) 66.666%)}
+.site-status{display:flex;justify-content:center;gap:8px;align-items:center;padding:11px 18px;margin-top:5px;background:#F8FAFC;border-bottom:1px solid var(--line);font-size:11px;font-weight:850;letter-spacing:.055em;color:var(--blue)}
+.site-status span{color:var(--saffron)}
+header{background:rgba(255,255,255,.97)!important;border-bottom:1px solid var(--line)!important}
+.brand{font-size:24px!important;font-weight:950!important;letter-spacing:-.035em!important}.brand span,.brand b{color:var(--green)!important}
+.hero h1,h1{color:var(--ink)!important;font-weight:950!important;letter-spacing:-.065em!important}.hero p{font-size:21px!important;line-height:1.5!important;color:#475467!important}
+.eyebrow,.code,.sect{color:var(--saffron)!important}.search{border-color:var(--blue)!important;box-shadow:0 7px 0 var(--blue)!important}.search button,.primary{background:var(--saffron)!important;color:#fff!important}
+.card{background:#fff!important;border-color:var(--line)!important;border-radius:20px!important}.card h2{font-size:24px!important;letter-spacing:-.025em!important}.tag{background:#EFF8F1!important;color:var(--green)!important}
+.detail{padding:42px!important}.detail h2{font-size:clamp(42px,6vw,68px)!important;line-height:.94!important;letter-spacing:-.06em!important;color:var(--ink)!important}.sub{font-size:17px!important;line-height:1.5!important}
+.kpi{border-radius:18px!important;padding:20px!important}.kpi strong{font-size:35px!important;color:var(--blue)!important}.kpi span{font-size:12px!important}
+.gov-head{margin:38px 0 16px;padding:20px 21px;background:#fff;border:1px solid var(--line);border-left:7px solid var(--saffron);border-radius:15px}
+.gov-title{font-size:18px;font-weight:950;letter-spacing:.09em;color:var(--saffron)}.gov-year{font-size:15px;font-weight:900;color:var(--blue);margin-top:4px}.gov-aside{font-size:15px;font-weight:650;color:#475467;margin-top:10px}
+.amen-grid{gap:12px!important}.amen{border-radius:17px!important;padding:17px!important;min-height:84px!important;background:#fff!important}.amen small{font-size:11px!important}.amen strong{font-size:19px!important;line-height:1.25!important}
+.unavailable{padding:21px;border-radius:17px;background:#FFF8F3;border:1px solid #FFD7C2;margin-bottom:22px}.unavailable>strong{font-size:22px;color:var(--saffron)}.unavailable p{font-size:15px;line-height:1.55;color:#344054}.unavailable a{font-weight:850;color:var(--blue);text-decoration:underline}.unavailable em{color:#667085}
+.independent-note{margin:30px 0 16px;padding:14px 16px;border-radius:12px;background:#F8FAFC;border:1px solid var(--line);font-size:12px;font-weight:850;letter-spacing:.055em;color:var(--blue)}.independent-note b{color:var(--green)}.actions button{font-size:16px!important;padding:15px 18px!important}.secondary{background:#F2F4F7!important;color:var(--ink)!important}.info .row strong{font-size:16px!important}
+@media(max-width:640px){.site-status{font-size:9px;gap:5px;padding:10px 8px}.detail{padding:28px 22px!important}.detail h2{font-size:44px!important}.hero p{font-size:18px!important}.amen-grid{grid-template-columns:1fr!important}.amen strong{font-size:20px!important}.gov-title{font-size:16px}.gov-aside{font-size:14px}}
