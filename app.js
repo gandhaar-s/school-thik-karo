@@ -78,32 +78,80 @@ async function openSchool(r){
 }
 function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}function wrap(c,t,x,y,w,lh,max){let ws=String(t).split(/\s+/),line='',ls=[];for(const z of ws){let q=line?line+' '+z:z;if(c.measureText(q).width>w&&line){ls.push(line);line=z;if(ls.length>=max)break}else line=q}if(ls.length<max&&line)ls.push(line);ls.forEach((z,i)=>c.fillText(z,x,y+i*lh));return y+ls.length*lh}
 async function story(r,share){
- const st=states.find(x=>x.code===stateCode),W=1080,H=1920,p=68,cv=document.createElement('canvas'),c=cv.getContext('2d');cv.width=W;cv.height=H;
- const saff='#FF671F',green='#138808',blue='#000080',ink='#18212B',muted='#667085',line='#E4E7EC';
+ const st=states.find(x=>x.code===stateCode),W=1080,H=1920,p=72,cv=document.createElement('canvas'),c=cv.getContext('2d');cv.width=W;cv.height=H;
+ const saff='#FF9933',green='#138808',blue='#000080',ink='#171A1F',muted='#667085',line='#E6E8EC',cream='#FFF7EE',mint='#F2FAF3',ice='#F5F6FF';
+ const box=(x,y,w,h,fill,stroke=line,rad=26)=>{c.fillStyle=fill;rr(c,x,y,w,h,rad);c.fill();c.strokeStyle=stroke;c.lineWidth=2;c.stroke()};
  c.fillStyle='#fff';c.fillRect(0,0,W,H);
- c.fillStyle=saff;c.fillRect(0,0,W/3,18);c.fillStyle='#fff';c.fillRect(W/3,0,W/3,18);c.fillStyle=green;c.fillRect(W*2/3,0,W/3,18);
- c.fillStyle=blue;c.font='900 23px system-ui';c.fillText('SCHOOL RECORDS INDIA',p,76);
- c.fillStyle=ink;c.font='950 58px system-ui';let y=158;y=wrap(c,r[F.n],p,y,W-p*2,64,4)+10;
- c.fillStyle=muted;c.font='700 22px system-ui';c.fillText(`${dict('d',r[F.d])}, ${st?.name||''} · UDISE ${r[F.u]}`,p,y);y+=68;
- c.fillStyle=saff;c.font='950 23px system-ui';c.fillText('WHAT THE GOVERNMENT SAYS',p,y);
- c.fillStyle=blue;c.font='850 18px system-ui';c.fillText('UDISE+ · 2025–26',p,y+30);
- c.fillStyle=muted;c.font='650 18px system-ui';c.fillText('According to UDISE+ 2025–26. Better to go and check yourself.',p,y+61);y+=98;
+ c.fillStyle=saff;c.fillRect(0,0,360,14);c.fillStyle='#fff';c.fillRect(360,0,360,14);c.fillStyle=green;c.fillRect(720,0,360,14);
+
+ c.fillStyle=blue;c.font='900 28px system-ui';c.fillText('SCHOOL RECORDS INDIA',p,82);
+ c.fillStyle=ink;c.font='950 68px system-ui';let y=160;y=wrap(c,r[F.n],p,y,W-p*2,72,4)+18;
+ c.fillStyle=muted;c.font='750 25px system-ui';c.fillText(`${dict('d',r[F.d])}, ${st?.name||''}`,p,y);y+=38;
+ c.font='750 21px system-ui';c.fillText(`UDISE ${r[F.u]}`,p,y);y+=70;
+
+ c.fillStyle=saff;c.font='950 29px system-ui';c.fillText('WHAT THE GOVERNMENT SAYS',p,y);
+ c.fillStyle=green;c.font='900 21px system-ui';c.fillText('UDISE+ · 2025–26',p,y+38);y+=78;
+
  const a=await amenitiesFor(stateCode,r[F.u]);
  if(a){
-  const x=k=>a[AI[k]],water=(x('tap_fun_yn')===1||x('hand_pump_fun_yn')===1||x('well_prot_fun_yn')===1||x('pack_water_fun_yn')===1||x('othsrc_fun_yn')===1)?'Yes':'—';
-  const vals=[['DRINKING WATER',water],['ELECTRICITY',elec(x('electricity_availability'))],['GIRLS’ TOILETS',`${num(x('total_girls_func_toilet'))}/${num(x('total_girls_toilet'))} functional`],['BOYS’ TOILETS',`${num(x('total_boys_func_toilet'))}/${num(x('total_boys_toilet'))} functional`],['LIBRARY',yn(x('library_availability'))],['PLAYGROUND',yn(x('playground_available'))],['INTERNET',yn(x('internet'))],['ICT / COMPUTER LAB',x('comp_ict_lab_yn')===1||x('ict_lab_yn')===1?'Yes':'No'],['RAMP',yn(x('availability_ramps'))],['HANDWASH',yn(x('handwash_near_toilet'))],['DIGITAL BOARDS',num(x('digiboard'))],['COMPUTERS',`${num(x('desktop'))} desktop · ${num(x('laptop'))} laptop · ${num(x('tablet'))} tablet`]];
-  vals.forEach((it,i)=>{const col=i%2,row=Math.floor(i/2),xx=p+col*472,yy=y+row*108;c.fillStyle='#fff';rr(c,xx,yy,442,88,18);c.fill();c.strokeStyle=line;c.lineWidth=2;c.stroke();c.fillStyle=muted;c.font='800 13px system-ui';c.fillText(it[0],xx+19,yy+27);c.fillStyle=String(it[1])==='Yes'?green:ink;c.font='900 24px system-ui';wrap(c,it[1],xx+19,yy+59,400,27,2)});y+=660;
- }else{
-  c.fillStyle='#FFF8F3';rr(c,p,y,W-p*2,230,22);c.fill();c.strokeStyle='#FFD7C2';c.stroke();
-  c.fillStyle=saff;c.font='950 27px system-ui';c.fillText('Amenities unavailable',p+25,y+48);
-  c.fillStyle=ink;c.font='700 19px system-ui';wrap(c,"The government's public 2025–26 dataset does not allow us to reliably connect this school's identity to its amenities record. We won't guess.",p+25,y+84,W-p*2-50,28,4);
-  c.fillStyle=muted;c.font='650 17px system-ui';c.fillText('You can check the school directly on the official UDISE+ KYS website.',p+25,y+194);y+=260;
+   const x=k=>a[AI[k]], water=(x('tap_fun_yn')===1||x('hand_pump_fun_yn')===1||x('well_prot_fun_yn')===1||x('pack_water_fun_yn')===1||x('othsrc_fun_yn')===1)?'Yes':'—';
+   c.fillStyle=ink;c.font='950 42px system-ui';c.fillText('AMENITIES',p,y);y+=28;
+   const vals=[
+    ['DRINKING WATER',water],['ELECTRICITY',elec(x('electricity_availability'))],
+    ['GIRLS’ TOILETS',`${num(x('total_girls_func_toilet'))}/${num(x('total_girls_toilet'))} functional`],
+    ['BOYS’ TOILETS',`${num(x('total_boys_func_toilet'))}/${num(x('total_boys_toilet'))} functional`],
+    ['LIBRARY',yn(x('library_availability'))],['PLAYGROUND',yn(x('playground_available'))],
+    ['INTERNET',yn(x('internet'))],['ICT / COMPUTER LAB',x('comp_ict_lab_yn')===1||x('ict_lab_yn')===1?'Yes':'No'],
+    ['RAMP',yn(x('availability_ramps'))],['HANDWASH',yn(x('handwash_near_toilet'))]
+   ];
+   vals.forEach((it,i)=>{
+     const col=i%2,row=Math.floor(i/2),xx=p+col*472,yy=y+row*124;
+     const val=String(it[1]), positive=val==='Yes'||(/functional/.test(val)&&!val.startsWith('0/'));
+     box(xx,yy,444,104,positive?mint:(i%3===0?cream:'#fff'));
+     c.fillStyle=muted;c.font='850 16px system-ui';c.fillText(it[0],xx+22,yy+31);
+     c.fillStyle=positive?green:ink;c.font='950 29px system-ui';wrap(c,val,xx+22,yy+72,398,32,2);
+   });
+   y+=5*124+36;
+ } else {
+   box(p,y,W-p*2,350,cream,'#FFD7B5',30);
+   c.fillStyle=saff;c.font='950 28px system-ui';c.fillText('AMENITIES',p+30,y+52);
+   c.fillStyle=ink;c.font='950 70px system-ui';c.fillText('UNAVAILABLE.',p+30,y+128);
+   c.font='750 25px system-ui';
+   wrap(c,"The government's public 2025–26 dataset doesn't let us reliably connect this school to its amenities record.",p+30,y+184,W-p*2-60,35,3);
+   c.fillStyle=green;c.font='950 32px system-ui';c.fillText("So we won't guess.",p+30,y+310);
+   y+=390;
  }
- c.fillStyle='#F8FAFC';rr(c,p,y,W-p*2,178,24);c.fill();c.strokeStyle=line;c.stroke();
- [[fmt(r[F.students]),'STUDENTS'],[fmt(r[F.teachers]),'TEACHERS'],[fmt(r[F.rooms]),'CLASSROOMS']].forEach((it,i)=>{const xx=p+35+i*300;c.fillStyle=blue;c.font='950 39px system-ui';c.fillText(it[0],xx,y+68);c.fillStyle=muted;c.font='800 14px system-ui';c.fillText(it[1],xx,y+100)});
- c.fillStyle=ink;c.font='950 19px system-ui';c.fillText('BASED ON GOVERNMENT DATA.',p,H-116);c.fillStyle=saff;c.fillText('NOT A GOVERNMENT WEBSITE.',p+332,H-116);
- c.fillStyle=muted;c.font='650 15px system-ui';c.fillText('Official amenities source: UDISE+ Data Sharing Portal · 2025–26',p,H-80);
- c.fillStyle=green;c.font='900 17px system-ui';c.fillText('SCHOOL RECORDS INDIA',p,H-44);
+
+ // School facts as individual, friendly cards.
+ c.fillStyle=ink;c.font='950 31px system-ui';c.fillText('QUICK LOOK',p,y);y+=26;
+ const facts=[
+   [fmt(r[F.students]),'STUDENTS',cream],
+   [fmt(r[F.teachers]),'TEACHERS',mint],
+   [fmt(r[F.rooms]),'CLASSROOMS',ice],
+   [`${r[F.low]??'—'}–${r[F.high]??'—'}`,'CLASSES','#FAFAFA'],
+   [String(r[F.est]??'—'),'ESTABLISHED','#FAFAFA']
+ ];
+ const gap=16, bw=(W-p*2-gap)/2, bh=138;
+ facts.forEach((it,i)=>{
+   let xx,yy,w=bw;
+   if(i<4){xx=p+(i%2)*(bw+gap);yy=y+Math.floor(i/2)*(bh+gap)}
+   else {xx=p;yy=y+2*(bh+gap);w=W-p*2}
+   box(xx,yy,w,bh,it[2]);
+   c.fillStyle=blue;c.font='950 43px system-ui';c.fillText(it[0],xx+24,yy+62);
+   c.fillStyle=muted;c.font='850 16px system-ui';c.fillText(it[1],xx+24,yy+96);
+ });
+ y+=3*(bh+gap)+34;
+
+ // Bottom identity panel, deliberately close to content: no dead story space.
+ box(p,y,W-p*2,190,'#171A1F','#171A1F',28);
+ c.fillStyle='#fff';c.font='950 24px system-ui';c.fillText('BASED ON GOVERNMENT DATA.',p+28,y+52);
+ c.fillStyle='#FFB266';c.fillText('NOT A GOVERNMENT WEBSITE.',p+28,y+90);
+ c.fillStyle='#D0D5DD';c.font='700 17px system-ui';c.fillText('Official amenities source: UDISE+ · 2025–26',p+28,y+132);
+ c.fillStyle='#8ED59A';c.font='900 18px system-ui';c.fillText('SCHOOL RECORDS INDIA',p+28,y+165);
+
+ // Small footer rule to visually finish the poster even on very tall canvases.
+ c.fillStyle=saff;c.fillRect(p,H-56,180,8);c.fillStyle=green;c.fillRect(p+180,H-56,180,8);c.fillStyle=blue;c.fillRect(p+360,H-56,60,8);
+
  const blob=await new Promise(z=>cv.toBlob(z,'image/png')),file=new File([blob],`school-${r[F.u]}-story.png`,{type:'image/png'});
  if(share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:r[F.n]});return}catch(e){}}
  const ae=document.createElement('a');ae.href=URL.createObjectURL(blob);ae.download=file.name;ae.click();setTimeout(()=>URL.revokeObjectURL(ae.href),1500)
