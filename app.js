@@ -19,7 +19,7 @@ const AF=["building_status","boundary_wall","total_class_rooms","classrooms_in_g
 const AI=Object.fromEntries(AF.map((x,i)=>[x,i]));
 async function amenitiesFor(code,udise){
   try{
-    if(!(code in amenCache)) amenCache[code]=fetch(`data/a/${code}.json`).then(x=>x.ok?x.json():{}).catch(()=>({}));
+    if(!(code in amenCache)) amenCache[code]=(async()=>{try{const mf=await fetch('data/a/manifest.json').then(x=>x.json());const objs=await Promise.all((mf[code]||[]).map(n=>fetch(`data/a/${n}`).then(x=>x.json())));return Object.assign({},...objs)}catch(e){return {}}})();
     return (await amenCache[code])[String(udise)]||null;
   }catch(e){return null}
 }
