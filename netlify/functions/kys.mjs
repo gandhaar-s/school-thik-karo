@@ -45,13 +45,23 @@ export default async (request) => {
     );
 
     const content = search?.data?.content || [];
-    const exact = content.find(x => String(x.udiseschCode) === udise) || content[0] || null;
+    const exact =
+      content.find(x => String(x.udiseschCode) === udise) ||
+      content[0] ||
+      null;
+
     const schoolId = exact?.schoolId ?? findId(search);
 
     if (schoolId != null) {
       await Promise.all([
-        call("profile", BASE + "school/profile?schoolId=" + encodeURIComponent(schoolId)),
-        call("facility", BASE + "school/facility?schoolId=" + encodeURIComponent(schoolId))
+        call(
+          "profile",
+          BASE + "school/profile?schoolId=" + encodeURIComponent(schoolId)
+        ),
+        call(
+          "facility",
+          BASE + "school/facility?schoolId=" + encodeURIComponent(schoolId)
+        )
       ]);
     }
 
@@ -60,7 +70,8 @@ export default async (request) => {
       {
         status: 200,
         headers: {
-          "cache-control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400"
+          "cache-control":
+            "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400"
         }
       }
     );
