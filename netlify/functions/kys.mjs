@@ -4,7 +4,7 @@ export default async (request) => {
   const url = new URL(request.url);
   const udise = String(url.searchParams.get("udise") || "").trim();
 
-  if (!/^\\d{11}$/.test(udise)) {
+  if (!/^\d{11}$/.test(udise)) {
     return Response.json(
       { error: "Valid 11-digit UDISE code required" },
       { status: 400, headers: { "cache-control": "no-store" } }
